@@ -1,0 +1,120 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+	
+	\noindent
+
+	\section{勒让德多项式}
+	
+当区间为 $[-1,1]$, 权函数 $\rho(x) \equiv 1$ 时, 由 $\left\{1, x, \cdots, x^n, \cdots\right\}$ 正交化得到的多项式称为勒让德 (Legendre) 多项式.
+$$
+\mathrm{P}_0(x)=1, \quad \mathrm{P}_n(x)=\frac{1}{2^n n !} \frac{\mathrm{d}^n}{\mathrm{~d} x^n}\left(x^2-1\right)^n, \quad n=1,2, \cdots .
+$$
+
+勒让德多项式的正交性：
+
+$$
+\int_{-1}^1 \mathrm{P}_n(x) \mathrm{P}_m(x) \mathrm{d} x= \begin{cases}0, & m \neq n ; \\ \frac{2}{2 n+1}, & m=n .\end{cases}
+$$
+
+\begin{proof}
+	令 $\varphi(x)=\left(x^2-1\right)^n$, 则
+	$$
+	\varphi^{(k)}( \pm 1)=0, \quad k=0,1, \cdots, n-1 .
+	$$
+	
+	设 $Q(x)$ 是在区间 $[-1,1]$ 上有 $n$ 阶连续可微的函数, 由分部积分法知
+	$$
+	\begin{aligned}
+		\int_{-1}^1 \mathrm{P}_n(x) Q(x) \mathrm{d} x & =\frac{1}{2^n n !} \int_{-1}^1 Q(x) \varphi^{(n)}(x) \mathrm{d} x \\
+		& =-\frac{1}{2^n n !} \int_{-1}^1 Q^{\prime}(x) \varphi^{(n-1)}(x) \mathrm{d} x \\
+		& =\cdots \\
+		& =\frac{(-1)^n}{2^n n !} \int_{-1}^1 Q^{(n)}(x) \varphi(x) \mathrm{d} x .
+	\end{aligned}
+	$$
+	
+	下面分两种情况讨论.
+	\begin{enumerate}
+		\item 若 $Q(x)$ 是次数小于 $n$ 的多项式, 则 $Q^{(n)}(x) \equiv 0$, 故得
+		$$
+		\int_{-1}^1 \mathrm{P}_n(x) \mathrm{P}_m(x) \mathrm{d} x=0 \text {, 当 } n \neq m .
+		$$
+		\item 若
+		$$
+		Q(x)=\mathrm{P}_n(x)=\frac{1}{2^n n !} \varphi^{(n)}(x)=\frac{(2 n) !}{2^n(n !)^2} x^n+\cdots,
+		$$
+		
+		则
+		$$
+		Q^{(n)}(x)=\mathrm{P}_n^{(n)}(x)=\frac{(2 n) !}{2^n n !},
+		$$
+		
+		于是
+		$$
+		\int_{-1}^1 \mathrm{P}_n^2(x) \mathrm{d} x=\frac{(-1)^n(2 n) !}{2^{2 n}(n !)^2} \int_{-1}^1\left(x^2-1\right)^n \mathrm{~d} x=\frac{(2 n) !}{2^{2 n}(n !)^2} \int_{-1}^1\left(1-x^2\right)^n \mathrm{~d} x .
+		$$
+		
+		由于
+		$$
+		\int_0^1\left(1-x^2\right)^n \mathrm{~d} x=\int_0^{\frac{\pi}{2}} \cos ^{2 n+1} t \mathrm{~d} t=\frac{2 \cdot 4 \cdot \cdots \cdot(2 n)}{1 \cdot 3 \cdot \cdots \cdot(2 n+1)},
+		$$
+		
+		故
+		$$
+		\int_{-1}^1 \mathrm{P}_n^2(x) \mathrm{d} x=\frac{2}{2 n+1},
+		$$
+	\end{enumerate}
+	
+\end{proof}
+
+\section{切比雪夫多项式}
+	
+	当权函数 $\rho(x)=\frac{1}{\sqrt{1-x^2}}$, 区间为 $[-1,1]$ 时, 由序列 $\left\{1, x, \cdots, x^n, \cdots\right\}$ 正交化得到的正交多项式称为切比雪夫多项式, 表示为
+	$$
+	T_n(x)=\cos (n \arccos x), \quad|x| \leq 1 .
+	$$
+	
+	若令 $x=\cos \theta$, 则 $T_n(x)=\cos n \theta, 0 \leq \theta \leq \pi$.
+	
+	\begin{equation*}
+		\begin{array}{cc}
+		 	T_0(x)=1, \quad T_1(x)=x ,\quad T_2(x)=2 x^2-1, \\
+			T_3(x)=4 x^3-3 x, \quad T_4(x)=8 x^4-8 x^2+1, \\
+			T_5(x)=16 x^5-20 x^3+5 x, \\
+			T_6(x)=32 x^6-48 x^4+18 x^2-1 \\
+			......
+		\end{array}
+	\end{equation*}
+	
+	
+	
+
+	
+	
+	切比雪夫多项式 $\left\{T_k(x)\right\}$ 在区间 $[-1,1]$上带权 $\rho(x)=1 / \sqrt{1-x^2}$ 正交, 且
+	$$
+	\int_{-1}^1 \frac{T_n(x) T_m(x) \mathrm{d} x}{\sqrt{1-x^2}}= \begin{cases}0, & n \neq m ; \\ \frac{\pi}{2}, & n=m \neq 0 ; \\ \pi, & n=m=0 .\end{cases}
+	$$
+	
+	\begin{proof}
+		令 $x=\cos \theta$, 则 $\mathrm{d} x=-\sin \theta \mathrm{d} \theta$, 于是
+		$$
+		\int_{-1}^1 \frac{T_n(x) T_m(x)}{\sqrt{1-x^2}} \mathrm{~d} x=\int_0^\pi \cos n \theta \cos m \theta \mathrm{d} \theta= \begin{cases}0, & n \neq m ; \\ \frac{\pi}{2}, & n=m \neq 0 ; \\ \pi, & n=m=0 .\end{cases}
+		$$
+	\end{proof}
+	
+	
+	
+\end{document}
