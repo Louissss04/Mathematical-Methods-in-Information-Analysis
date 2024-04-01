@@ -1,0 +1,61 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+\newtheorem{theorem}{定理}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+
+
+\begin{document}
+	
+	\noindent
+	
+\section{时域卷积定理}	
+
+	\begin{theorem}[时域卷积定理]
+		
+			若$F_1(j w) = F[f_1(t)], F_2(j w) = F[f_2(t)]$, 则$$F\left[f_1(t) \star f_2(t)\right]=F_1(j w) F_2(j w)$$
+	\end{theorem}
+	
+	\begin{proof}[证明]
+		\begin{equation*}
+			\begin{aligned}
+				F\left[f_1(t) \star f_2(t)\right] & =\int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty}\left[f_1(t) \star f_2(t)\right] e^{-j w t} d t d \tau \\
+				& =\int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} f_1(\tau) f_2(t-\tau) e^{-j w t} d t d \tau \\
+				& =\int_{-\infty}^{+\infty} f_1(\tau) d \tau\left[\int_{-\infty}^{+\infty} f_2(t-\tau) e^{-j w t} d t\right] \\
+				& =F_2(j w)\left[\int_{-\infty}^{+\infty} f_1(\tau) e^{-j w \tau} d \tau\right] \\
+				& =F_1(j w) F_2(j w)
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+	
+\section{频域卷积定理}
+	\begin{theorem}[频域卷积定理]
+		$$
+		F[f_1(t)f_2(t)] = \frac{1}{2\pi} F_1(j w) \star F_2(j w)
+		$$
+	\end{theorem}
+	
+	\begin{proof}[证明]
+		\begin{equation*}
+			\begin{aligned}
+				F^{-1}\left[F_1(j w) \star F_2(j w)\right] & =\frac{1}{2 \pi} \int_{-\infty}^{+\infty}\left[F_1(j w) \star F_2(j w)\right] e^{j w t} d w \\
+				& =\frac{1}{2 \pi} \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty}\left[F_1(j u) F_2(j(w-u))\right] e^{j w t} d w d u \\
+				& =\int_{-\infty}^{+\infty} F_1(j u) d u\left[\frac{1}{2 \pi} \int_{-\infty}^{+\infty} F_2(j(w-u)) e^{j w t} d w\right] \\
+				& =\int_{-\infty}^{+\infty} F_1(j u) e^{j u t} d u\left[\frac{1}{2 \pi} \int_{-\infty}^{+\infty} F_2(j(w-u)) e^{j w t} d w\right] \\
+				& =2 \pi f_2(t)\left[\frac{1}{2 \pi} \int_{-\infty}^{+\infty} F_1(j u) e^{j u t} d u\right] \\
+				& =2 \pi f_1(t) f_2(t)
+			\end{aligned}
+		\end{equation*}
+	\end{proof}
+\end{document}
